@@ -33,6 +33,9 @@ else
     FILE=$FOLDER-$ARCH_STRING.tar
     FILE_NUBIT=$FOLDER/bin/nubit
     FILE_NKEY=$FOLDER/bin/nkey
+    if [ -f $FILE ]; then
+        rm $FILE
+    fi
     OK="N"
     if [ "$(uname -s)" = "Darwin" ]; then
         if [ -d $FOLDER ] && [ -f $FILE_NUBIT ] && [ -f $FILE_NKEY ] && [ $(md5 -q "$FILE_NUBIT" | awk '{print $1}') = $MD5_NUBIT ] && [ $(md5 -q "$FILE_NKEY" | awk '{print $1}') = $MD5_NKEY ]; then
@@ -72,9 +75,17 @@ else
         echo "MD5 checking passed. Start directly"
     else
         echo "Installation of the latest version of nubit-node is required to ensure optimal performance and access to new features."
-        URL=https://nubit.sh/nubit-bin/$FILE
-        wget https://media.githubusercontent.com/media/Tu-guang/nubit/main/nubit-node-linux-x86_64.tar?download=true -O nubit-node-linux-x86_64.tar
+        URL=https://nubit-cdn.com/nubit-bin/$FILE
         echo "Upgrading nubit-node ..."
+        echo "Download from URL, please do not close: $URL"
+        if command -v curl >/dev/null 2>&1; then
+            curl -sLO $URL
+            elif command -v wget >/dev/null 2>&1; then
+                wget -q $URL
+            else
+            echo "Neither curl nor wget are available. Please install one of these and try again"
+            exit 1
+        fi
         tar -xvf $FILE
         if [ ! -d $FOLDER ]; then
             mkdir $FOLDER
@@ -84,7 +95,9 @@ else
         fi
         mv $FOLDER-$ARCH_STRING/bin/nubit $FOLDER/bin/nubit
         mv $FOLDER-$ARCH_STRING/bin/nkey $FOLDER/bin/nkey
+        rm -rf $FOLDER-$ARCH_STRING
+        rm $FILE
         echo "Nubit-node update complete."
     fi
-    curl -sL1 https://raw.githubusercontent.com/Tu-guang/nubit-shell/main/start.sh | bash
+    curl -sL1 https://nubit.sh/start.sh | bash
 fi
