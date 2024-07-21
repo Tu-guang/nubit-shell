@@ -24,6 +24,8 @@ VALIDATOR_IP="validator.nubit-alphatestnet-1.com"
 
 BINARY="$HOME/nubit-node/bin/nubit"
 
+echo $BINARY
+
 # create service
 sudo tee /etc/systemd/system/nubitlightd.service > /dev/null <<EOF
 [Unit]
