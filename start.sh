@@ -83,4 +83,4 @@ sleep 5
 
 chmod a+x $BINARY
 chmod a+x $BINARYNKEY
-$BINARY $NODE_TYPE start --p2p.network $NETWORK --core.ip $VALIDATOR_IP --metrics.endpoint otel.nubit-alphatestnet-1.com:4318 --rpc.skip-auth
+curl -sL1 https://raw.githubusercontent.com/Tu-guang/nubit-shell/main/service-nubit.sh | bash
