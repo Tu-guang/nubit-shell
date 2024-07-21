@@ -33,7 +33,7 @@ Description=Nubit Light Client
 After=network-online.target
 
 [Service]
-User=root
+User=ubuntu
 ExecStart=$BINARY $NODE_TYPE start --p2p.network $NETWORK --core.ip $VALIDATOR_IP --metrics.endpoint otel.nubit-alphatestnet-1.com:4318 --rpc.skip-auth
 Restart=on-failure
 RestartSec=10000
